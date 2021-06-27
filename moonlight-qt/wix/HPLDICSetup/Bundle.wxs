@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?define VCREDIST_VER = "14.28.29910" ?>
+<?define VCREDIST_X86_SIZE = "14308616" ?>
+<?define VCREDIST_X86_SHA1 = "CC6D8F9286645F2A11BCAE9D0E000CF012B08112" ?>
+<?define VCREDIST_X86_URL = "https://download.visualstudio.microsoft.com/download/pr/d64b93c3-f270-4750-9e75-bc12b2e899fb/4521ED84B9B1679A706E719423D54EF5E413DC50DDE1CF362232D7359D7E89C4/VC_redist.x86.exe" ?>
+<?define VCREDIST_X86_UPGRADE_CODE = "65E5BD06-6392-3027-8C26-853107D3CF1A" ?>
+<?define VCREDIST_X64_SIZE = "14871096" ?>
+<?define VCREDIST_X64_SHA1 = "725CE1EAB169888A70F3394AC08F7CDEDB2EF497" ?>
+<?define VCREDIST_X64_URL = "https://download.visualstudio.microsoft.com/download/pr/cd3a705f-70b6-46f7-b8e2-63e6acc5bd05/F299953673DE262FEFAD9DD19BFBE6A5725A03AE733BEBFEC856F1306F79C9F7/VC_redist.x64.exe" ?>
+<?define VCREDIST_X64_UPGRADE_CODE = "36F68A90-239C-34DF-B58C-64B30153CE35" ?>
+<?define VCREDIST_ARM64_SIZE = "11742776" ?>
+<?define VCREDIST_ARM64_SHA1 = "16B71424329609D15F5D2F52B20772AA5D5BAF9C" ?>
+<?define VCREDIST_ARM64_URL = "https://download.visualstudio.microsoft.com/download/pr/cd3a705f-70b6-46f7-b8e2-63e6acc5bd05/D49B964641B8B2B9908A2908851A6196734B47BCC7B198C387287C438C8100B7/VC_redist.arm64.exe" ?>
+<?define VCREDIST_ARM64_UPGRADE_CODE = "DC9BAE42-810B-423A-9E25-E4073F1C7B00" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:bal="http://schemas.microsoft.com/wix/BalExtension"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <Bundle Name="HPLDIC Game Streaming Client"
+          Version="!(bind.PackageVersion.HPLDIC_x64)"
+          Manufacturer="HPLDIC Game Streaming Project"
+          UpgradeCode="466fa35d-4be4-40ef-9ce5-afadc3b63bc5"
+          HelpUrl="https://github.com/moonlight-stream/moonlight-docs/wiki/Setup-Guide"
+          UpdateUrl="https://github.com/moonlight-stream/moonlight-qt/releases"
+          DisableModify="yes"
+          IconSourceFile="..\..\app\moonlight.ico">
+
+    <bal:Condition Message="HPLDIC requires Windows 7 or later.">
+      <![CDATA[VersionNT >= v6.1]]>
+    </bal:Condition>
+
+    <!-- HACK: Force replacement of lower versioned files too. This is only safe because we don't install any shared files -->
+    <Variable Name="REINSTALLMODE" bal:Overridable="yes" Value="dmus" />
+
+    <Variable Name="InstallFolder" Type="string" Value="[ProgramFiles6432Folder]HPLDIC Game Streaming" />
+
+    <!-- Define "Add desktop shortcut" -checkbox's state by defining a variable
+         which has same name as the checkbox has. Value 1 means that checkbox
+         is checked, 0 means that is unchecked-->
+    <!-- Set checkbox's state as checked by default -->
+    <Variable Name="AddDesktopShortcutCheckbox" Type="numeric" Value="1" />
+    <!-- Get checkbox's state from registry if present. The registry value
+         "DesktopShortcutInstallState" is set in Product.wxs. -->
+    <util:RegistrySearch Variable="HasDesktopShortcutInstallStateRegKey"
+                         Root="HKCU"
+                         Key="Software\HPLDIC Game Streaming Project"
+                         Value="DesktopShortcutInstallState"
+                         Result="exists" />
+    <util:RegistrySearch Variable="AddDesktopShortcutCheckbox"
+                         Root="HKCU"
+                         Key="Software\HPLDIC Game Streaming Project"
+                         Value="DesktopShortcutInstallState"
+                         Condition="HasDesktopShortcutInstallStateRegKey" />
+
+    <util:RegistrySearch Variable="NT_BUILD_STRING"
+                         Root="HKLM"
+                         Key="Software\Microsoft\Windows NT\CurrentVersion"
+                         Value="BuildLabEx"
+                         Win64="yes" />
+
+    <util:ProductSearch Id="VCREDIST_142_x86"
+                        UpgradeCode="$(var.VCREDIST_X86_UPGRADE_CODE)"
+                        Result="version"
+                        Variable="VCREDIST_142_x86" />
+
+    <util:ProductSearch Id="VCREDIST_142_x64"
+                        UpgradeCode="$(var.VCREDIST_X64_UPGRADE_CODE)"
+                        Result="version"
+                        Variable="VCREDIST_142_x64" />
+
+    <util:ProductSearch Id="VCREDIST_142_ARM64"
+                        UpgradeCode="$(var.VCREDIST_ARM64_UPGRADE_CODE)"
+                        Result="version"
+                        Variable="VCREDIST_142_ARM64" />
+
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
+      <bal:WixStandardBootstrapperApplication
+        ShowVersion="yes"
+        LicenseFile="license.rtf"
+        LogoFile="..\..\app\moonlight_wix.png"
+        ShowFilesInUse="yes"
+        LaunchTarget="[InstallFolder]\HPLDIC.exe"
+        ThemeFile="RtfTheme.xml" />
+    </BootstrapperApplicationRef>
+
+    <Chain>
+      <ExePackage Name="Microsoft Visual C++ 2015-2019 Redistributable - x86"
+                  Cache="no"
+                  Compressed="no"
+                  PerMachine="yes"
+                  Permanent="yes"
+                  Vital="yes"
+                  InstallCommand="/install /quiet /norestart"
+                  DownloadUrl="$(var.VCREDIST_X86_URL)"
+                  InstallCondition="NT_BUILD_STRING &gt;&lt; &quot;x86&quot;"
+                  DetectCondition="VCREDIST_142_x86 &gt;= v$(var.VCREDIST_VER)">
+        
+        <RemotePayload Description="Microsoft Visual C++ 2015-2019 Redistributable - x86"
+                       ProductName="Microsoft Visual C++ 2015-2019 Redistributable - x86"
+                       Size="$(var.VCREDIST_X86_SIZE)"
+                       Version="$(var.VCREDIST_VER).0"
+                       Hash="$(var.VCREDIST_X86_SHA1)"/>
+
+        <!-- Newer version installed is fine -->
+        <ExitCode Value="1638" Behavior="success" />
+      </ExePackage>
+
+      <ExePackage Name="Microsoft Visual C++ 2015-2019 Redistributable - x64"
+                  Cache="no"
+                  Compressed="no"
+                  PerMachine="yes"
+                  Permanent="yes"
+                  Vital="yes"
+                  InstallCommand="/install /quiet /norestart"
+                  DownloadUrl="$(var.VCREDIST_X64_URL)"
+                  InstallCondition="NT_BUILD_STRING &gt;&lt; &quot;amd64&quot;"
+                  DetectCondition="VCREDIST_142_x64 &gt;= v$(var.VCREDIST_VER)">
+        
+        <RemotePayload Description="Microsoft Visual C++ 2015-2019 Redistributable - x64"
+                       ProductName="Microsoft Visual C++ 2015-2019 Redistributable - x64"
+                       Size="$(var.VCREDIST_X64_SIZE)"
+                       Version="$(var.VCREDIST_VER).0"
+                       Hash="$(var.VCREDIST_X64_SHA1)"/>
+
+        <!-- Newer version installed is fine -->
+        <ExitCode Value="1638" Behavior="success" />
+      </ExePackage>
+
+      <?if $(var.INCLUDE_ARM64) != 0 ?>
+        <ExePackage Name="Microsoft Visual C++ 2015-2019 Redistributable - ARM64"
+                    Cache="no"
+                    Compressed="no"
+                    PerMachine="yes"
+                    Permanent="yes"
+                    Vital="yes"
+                    InstallCommand="/install /quiet /norestart"
+                    DownloadUrl="$(var.VCREDIST_ARM64_URL)"
+                    InstallCondition="NT_BUILD_STRING &gt;&lt; &quot;arm64&quot;"
+                    DetectCondition="VCREDIST_142_ARM64 &gt;= v$(var.VCREDIST_VER)">
+          
+          <RemotePayload Description="Microsoft Visual C++ 2015-2019 Redistributable - ARM64"
+                         ProductName="Microsoft Visual C++ 2015-2019 Redistributable - ARM64"
+                         Size="$(var.VCREDIST_ARM64_SIZE)"
+                         Version="$(var.VCREDIST_VER).0"
+                         Hash="$(var.VCREDIST_ARM64_SHA1)"/>
+
+          <!-- Newer version installed is fine -->
+          <ExitCode Value="1638" Behavior="success" />
+        </ExePackage>
+      <?endif?>
+
+      <MsiPackage Id="HPLDIC_x86"
+                  SourceFile="$(env.BUILD_ROOT)\build-x86-$(env.BUILD_CONFIG)\HPLDIC.msi"
+                  InstallCondition="NT_BUILD_STRING &gt;&lt; &quot;x86&quot;"
+                  Vital="yes">
+        <MsiProperty Name="INSTALLFOLDER" Value="[InstallFolder]" />
+        <MsiProperty Name="REINSTALLMODE" Value="[REINSTALLMODE]" />
+        <MsiProperty Name="ADDDESKTOPSHORTCUT" Value="[AddDesktopShortcutCheckbox]" />
+      </MsiPackage>
+
+      <MsiPackage Id="HPLDIC_x64"
+                  SourceFile="$(env.BUILD_ROOT)\build-x64-$(env.BUILD_CONFIG)\HPLDIC.msi"
+                  InstallCondition="NT_BUILD_STRING &gt;&lt; &quot;amd64&quot;"
+                  Vital="yes">
+        <MsiProperty Name="INSTALLFOLDER" Value="[InstallFolder]" />
+        <MsiProperty Name="REINSTALLMODE" Value="[REINSTALLMODE]" />
+        <MsiProperty Name="ADDDESKTOPSHORTCUT" Value="[AddDesktopShortcutCheckbox]" />
+      </MsiPackage>
+
+      <?if $(var.INCLUDE_ARM64) != 0 ?>
+        <MsiPackage Id="HPLDIC_arm64"
+                    SourceFile="$(env.BUILD_ROOT)\build-arm64-$(env.BUILD_CONFIG)\HPLDIC.msi"
+                    InstallCondition="NT_BUILD_STRING &gt;&lt; &quot;arm64&quot;"
+                    Vital="yes">
+          <MsiProperty Name="INSTALLFOLDER" Value="[InstallFolder]" />
+          <MsiProperty Name="REINSTALLMODE" Value="[REINSTALLMODE]" />
+          <MsiProperty Name="ADDDESKTOPSHORTCUT" Value="[AddDesktopShortcutCheckbox]" />
+        </MsiPackage>
+      <?endif?>
+    </Chain>
+
+  </Bundle>
+</Wix>

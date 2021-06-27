@@ -1,0 +1,7 @@
+C:\Users\hzluj\Documents\GitHub\moonlight-qt\build\build-x64-release\Product.wixobj
+C:\Users\hzluj\Documents\GitHub\moonlight-qt\build\build-x64-release\Dependencies.wixobj
+C:\Users\hzluj\Documents\GitHub\moonlight-qt\build\build-x64-release\HPLDIC.msi
+C:\Users\hzluj\Documents\GitHub\moonlight-qt\build\build-x64-release\HPLDIC.wixpdb
+C:\Users\hzluj\Documents\GitHub\moonlight-qt\build\build-x64-release\HPLDIC.wixproj.BindContentsFileListnull.txt
+C:\Users\hzluj\Documents\GitHub\moonlight-qt\build\build-x64-release\HPLDIC.wixproj.BindOutputsFileListnull.txt
+C:\Users\hzluj\Documents\GitHub\moonlight-qt\build\build-x64-release\HPLDIC.wixproj.BindBuiltOutputsFileListnull.txt

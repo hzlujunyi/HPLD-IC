@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<RCC>
+    <qresource prefix="/">
+        <file alias="gui/main.qml">../../moonlight-qt/app/gui/main.qml</file>
+        <file alias="gui/PcView.qml">../../moonlight-qt/app/gui/PcView.qml</file>
+        <file alias="gui/AppView.qml">../../moonlight-qt/app/gui/AppView.qml</file>
+        <file alias="gui/SettingsView.qml">../../moonlight-qt/app/gui/SettingsView.qml</file>
+        <file alias="gui/StreamSegue.qml">../../moonlight-qt/app/gui/StreamSegue.qml</file>
+        <file alias="gui/GamepadMapper.qml">../../moonlight-qt/app/gui/GamepadMapper.qml</file>
+        <file alias="gui/QuitSegue.qml">../../moonlight-qt/app/gui/QuitSegue.qml</file>
+        <file alias="gui/NavigableToolButton.qml">../../moonlight-qt/app/gui/NavigableToolButton.qml</file>
+        <file alias="gui/NavigableItemDelegate.qml">../../moonlight-qt/app/gui/NavigableItemDelegate.qml</file>
+        <file alias="gui/NavigableMenuItem.qml">../../moonlight-qt/app/gui/NavigableMenuItem.qml</file>
+        <file alias="gui/CliQuitStreamSegue.qml">../../moonlight-qt/app/gui/CliQuitStreamSegue.qml</file>
+        <file alias="gui/CliStartStreamSegue.qml">../../moonlight-qt/app/gui/CliStartStreamSegue.qml</file>
+        <file alias="gui/AutoResizingComboBox.qml">../../moonlight-qt/app/gui/AutoResizingComboBox.qml</file>
+        <file alias="gui/NavigableMenu.qml">../../moonlight-qt/app/gui/NavigableMenu.qml</file>
+        <file alias="gui/ErrorMessageDialog.qml">../../moonlight-qt/app/gui/ErrorMessageDialog.qml</file>
+        <file alias="gui/NavigableMessageDialog.qml">../../moonlight-qt/app/gui/NavigableMessageDialog.qml</file>
+        <file alias="gui/NavigableDialog.qml">../../moonlight-qt/app/gui/NavigableDialog.qml</file>
+        <file alias="gui/CenteredGridView.qml">../../moonlight-qt/app/gui/CenteredGridView.qml</file>
+        <file alias="gui/MenuToolButton.qml">../../moonlight-qt/app/gui/MenuToolButton.qml</file>
+    </qresource>
+</RCC>

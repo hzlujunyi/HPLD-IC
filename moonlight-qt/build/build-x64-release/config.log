@@ -1,0 +1,15 @@
+executing config test SL
++ cd /d C:\Users\hzluj\Documents\GitHub\moonlight-qt\build\build-x64-release\config.tests\SL && C:\ProgramData\Anaconda3\Library\bin\qmake.exe  -spec C:/ProgramData/Anaconda3/Library/mkspecs/win32-msvc "CONFIG -= qt debug_and_release app_bundle lib_bundle" C:/Users/hzluj/Documents/GitHub/moonlight-qt/config.tests/SL
++ cd /d C:\Users\hzluj\Documents\GitHub\moonlight-qt\build\build-x64-release\config.tests\SL && set MAKEFLAGS=& nmake
+> Microsoft (R) 程序维护实用工具 14.29.30038.1 版
+> 版权所有 (C) Microsoft Corporation。  保留所有权利。
+> 	cl -c -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -O2 -MD -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -EHsc -DUNICODE -D_UNICODE -DWIN32 -DDISABLE_WINRT_DEPRECATION -DWIN64 -DNDEBUG -IC:\Users\hzluj\Documents\GitHub\moonlight-qt\config.tests\SL -I. -IC:\ProgramData\Anaconda3\Library\mkspecs\win32-msvc -Fo @C:\Users\hzluj\AppData\Local\Temp\nm540.tmp
+> main.cpp
+> C:\Users\hzluj\Documents\GitHub\moonlight-qt\config.tests\SL\main.cpp(1): fatal error C1083: 无法打开包括文件: “SLVideo.h”: No such file or directory
+> NMAKE : fatal error U1077: “"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\bin\HostX64\x64\cl.EXE"”: 返回代码“0x2”
+> Stop.
+test SL FAILED
+executing config test EGL
++ cd /d C:\Users\hzluj\Documents\GitHub\moonlight-qt\build\build-x64-release\config.tests\EGL && C:\ProgramData\Anaconda3\Library\bin\qmake.exe  -spec C:/ProgramData/Anaconda3/Library/mkspecs/win32-msvc "CONFIG -= qt debug_and_release app_bundle lib_bundle" C:/Users/hzluj/Documents/GitHub/moonlight-qt/config.tests/EGL
+> Project ERROR: sdl2 development package not found
+test EGL FAILED
